@@ -28,6 +28,8 @@ AppDelegate *app = nil;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    //123456789
+    
     [[UITabBar appearance] setTranslucent:NO];
     
     self.application = application;
