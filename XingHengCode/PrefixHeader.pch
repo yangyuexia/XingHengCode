@@ -1,0 +1,44 @@
+//
+//  PrefixHeader.pch
+//  RepeatCode
+//
+//  Created by Yang Yuexia on 2018/6/27.
+//  Copyright © 2018年 Yang Yuexia. All rights reserved.
+//
+
+#import <Availability.h>
+
+#ifdef __OBJC__
+#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+#import "GlobalManager.h"
+#import "QWBaseAlert.h"
+#import "SystemMacro.h"
+#import "YYXError.h"
+#import "QWcss.h"
+#import "css.h"
+#import "QWConfig.h"
+#import "QWSystemMacro.h"
+#import "Notification.h"
+#import "API.h"
+#import "QWConstant.h"
+#import "QWUserDefault.h"
+#import "Warning.h"
+#import "QWLoading.h"
+#import "QWBaseNavigationController.h"
+#import "CocoaLumberjack.h"
+#import "AESUtil.h"
+#import "SVProgressHUD.h"
+#import "System.h"
+#import "IndexApi.h"
+
+//#import "UIView+Additions.h"
+//#import "UIColor+MLPFlatColors.h"
+
+#endif
+
+#ifdef DEBUG
+static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
+#else
+static const DDLogLevel ddLogLevel = DDLogLevelError;
+#endif

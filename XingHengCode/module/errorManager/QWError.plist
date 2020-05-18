@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>1013</key>
+	<string>文件被损坏或被修改了</string>
+	<key>1012</key>
+	<string>本地未找着附件</string>
+	<key>1011</key>
+	<string>已达到最大重试次数(Ex. 自动登陆情况下, 登陆不成功时的重试次</string>
+	<key>1010</key>
+	<string>短时间内多次发起同一异步请求(Ex. 频繁刷新群组列表, 会返回的</string>
+	<key>1009</key>
+	<string>操作群组时, 人员不在此群组(Ex. rQWove群组成员时, 会返回的</string>
+	<key>1008</key>
+	<string>所执行操作的权限不够(Ex. 非管理员删除群成员时, 会返回的</string>
+	<key>1007</key>
+	<string>注册失败(Ex. 注册时, 如果用户存在, 会返回的error)</string>
+	<key>1006</key>
+	<string>APNS注册失败 (Ex. 登录时, APNS注册失败会返回的error)</string>
+	<key>1005</key>
+	<string>获取token失败(Ex. 登录时用户名密码错误，或者服务器无法返回</string>
+	<key>1004</key>
+	<string>连接超时(Ex. 服务器连接超时会返回的error)</string>
+	<key>1003</key>
+	<string>连接服务器失败(Ex. 手机客户端无网的时候, 会返回的error)</string>
+	<key>1002</key>
+	<string>未登录</string>
+	<key>1000</key>
+	<string>无效的appKey</string>
+	<key>500</key>
+	<string>发送失败，数量达到上限（每人最多100条离线消息，群组成员达到</string>
+	<key>404</key>
+	<string>不存在</string>
+	<key>-999</key>
+	<string>本地取消请求</string>
+	<key>-1001</key>
+	<string>请求超时</string>
+</dict>
+</plist>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="Swf-MT-NiA" customClass="CheckResultView">
+            <rect key="frame" x="0.0" y="0.0" width="305" height="20"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aCJ-nM-vht">
+                    <rect key="frame" x="0.0" y="17" width="305" height="3"/>
+                    <color key="backgroundColor" red="0.94901960784313721" green="0.95686274509803915" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="3" id="FAo-Rq-SVY"/>
+                    </constraints>
+                </view>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="E104" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="awd-cg-x2L">
+                    <rect key="frame" x="0.0" y="0.0" width="50" height="17"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="50" id="ghm-uv-tI4"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="12"/>
+                    <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="信号连接不良" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oQb-a8-wo1">
+                    <rect key="frame" x="50" y="0.0" width="255" height="17"/>
+                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="12"/>
+                    <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="aCJ-nM-vht" firstAttribute="trailing" secondItem="Er1-XL-fVr" secondAttribute="trailing" id="2fa-s6-0Sn"/>
+                <constraint firstItem="oQb-a8-wo1" firstAttribute="leading" secondItem="awd-cg-x2L" secondAttribute="trailing" id="72Q-2r-0i4"/>
+                <constraint firstItem="aCJ-nM-vht" firstAttribute="top" secondItem="awd-cg-x2L" secondAttribute="bottom" id="PHv-fx-dU6"/>
+                <constraint firstItem="aCJ-nM-vht" firstAttribute="top" secondItem="oQb-a8-wo1" secondAttribute="bottom" id="clS-Yz-ZFD"/>
+                <constraint firstItem="awd-cg-x2L" firstAttribute="top" secondItem="Er1-XL-fVr" secondAttribute="top" id="eKe-Dr-ZON"/>
+                <constraint firstItem="aCJ-nM-vht" firstAttribute="leading" secondItem="Er1-XL-fVr" secondAttribute="leading" id="gwf-ya-hj6"/>
+                <constraint firstItem="awd-cg-x2L" firstAttribute="leading" secondItem="Er1-XL-fVr" secondAttribute="leading" id="htU-gI-4Kg"/>
+                <constraint firstItem="oQb-a8-wo1" firstAttribute="top" secondItem="Er1-XL-fVr" secondAttribute="top" id="kKC-b9-kaX"/>
+                <constraint firstItem="oQb-a8-wo1" firstAttribute="trailing" secondItem="Er1-XL-fVr" secondAttribute="trailing" id="ruM-NL-4VQ"/>
+                <constraint firstItem="aCJ-nM-vht" firstAttribute="bottom" secondItem="Er1-XL-fVr" secondAttribute="bottom" id="tId-0k-69A"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="Er1-XL-fVr"/>
+            <connections>
+                <outlet property="codeLabel" destination="awd-cg-x2L" id="zep-1J-taw"/>
+                <outlet property="descLabel" destination="oQb-a8-wo1" id="izq-Nx-cSx"/>
+            </connections>
+            <point key="canvasLocation" x="127" y="7"/>
+        </view>
+    </objects>
+</document>
