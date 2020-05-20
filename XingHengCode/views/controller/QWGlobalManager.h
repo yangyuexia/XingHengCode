@@ -72,6 +72,8 @@ typedef struct RedPoint RedPoint;
 
 @property (assign, nonatomic) BOOL isShowAppLaunch;
 
+@property (assign, nonatomic) BOOL isChecking;
+
 
 - (void)getAllMessage;
 

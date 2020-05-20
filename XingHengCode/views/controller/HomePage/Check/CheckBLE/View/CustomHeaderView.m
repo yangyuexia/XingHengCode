@@ -89,6 +89,9 @@
         self.circleImage.hidden = NO;
         
     }else if (state == 3){
+        if (QWGLOBALMANAGER.isChecking) {
+            return;
+        }
         [self.checkBtn setTitle:@"智能电池检测" forState:UIControlStateNormal];
         self.checkBtn.backgroundColor = RGBHex(qwColor6);
         self.checkBtn.enabled = YES;
@@ -107,7 +110,7 @@
 }
 
 - (void)checkingState{
-    [self.checkBtn setTitle:@"智能电池检测..." forState:UIControlStateNormal];
+    [self.checkBtn setTitle:@"智能电池检测中..." forState:UIControlStateNormal];
     self.checkBtn.backgroundColor = RGBHex(0xE6E6EB);
     self.checkBtn.enabled = NO;
 }

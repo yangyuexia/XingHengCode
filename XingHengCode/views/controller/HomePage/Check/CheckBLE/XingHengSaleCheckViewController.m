@@ -68,6 +68,8 @@ NSString * const RESULT21 = @"3A1621010038000D0A";
 
 @property (assign, nonatomic) NSInteger send23Once;
 
+@property (strong, nonatomic) NSString *bleName;
+
 - (IBAction)backAction:(id)sender;
 - (IBAction)configureAction:(id)sender;
 
@@ -147,6 +149,7 @@ NSString * const RESULT21 = @"3A1621010038000D0A";
 }
 
 - (void)setUpFooter{
+    QWGLOBALMANAGER.isChecking = NO;
     self.CustomFooterView = [[CustomFooterView alloc] initWithFrame:CGRectMake(0, 0, APP_W, 360)];
     [self.CustomFooterView configureData:self.checkDataModel];
     self.tableView.tableFooterView = self.CustomFooterView;
@@ -155,6 +158,14 @@ NSString * const RESULT21 = @"3A1621010038000D0A";
 
 
 - (void)updateHeaderUI:(NSInteger)state{
+    if (state == 3 && QWGLOBALMANAGER.isChecking) {
+        return;
+    }else{
+        QWGLOBALMANAGER.isChecking = NO;
+    }
+    
+    
+    
     dispatch_async(dispatch_get_main_queue(), ^{
         if (state == 0) { //蓝牙断开
             self.backgroundImage.image = [UIImage imageNamed:@"img-con-unconnect-img"];
@@ -263,6 +274,7 @@ NSString * const RESULT21 = @"3A1621010038000D0A";
 
 #pragma mark ---- 智能电池检测 ----
 - (void)checkBatteryAction{
+    QWGLOBALMANAGER.isChecking = YES;
     [self release23Timer];
     [self.customHeaderView checkingState];
     [self clearAllData];
@@ -576,6 +588,7 @@ NSString * const RESULT21 = @"3A1621010038000D0A";
     //连接Peripherals成功
     [QWGLOBALMANAGER.baby setBlockOnConnected:^(CBCentralManager *central, CBPeripheral *peripheral) {
         [weakSelf updateHeaderUI:1];
+        weakSelf.bleName = peripheral.name;
     }];
 
 
@@ -991,7 +1004,7 @@ NSString * const RESULT21 = @"3A1621010038000D0A";
 
     setting[@"warranty_status"] = self.batteryInfoModel.status; //保修状态
     setting[@"discharge_voltage"] = @"0mV"; //加载放电口电压
-    setting[@"detector"] = self.checkDataModel.dcname; //检测仪ID
+    setting[@"detector"] = self.bleName; //检测仪ID
     setting[@"load_data"] = @{}; //详细负载检测数据(json)
     setting[@"no_load_data"] = [self getNo_load_dataJson]; //详细空载检测数据（json）
     
@@ -1013,7 +1026,13 @@ NSString * const RESULT21 = @"3A1621010038000D0A";
         NSString *key = [NSString stringWithFormat:@"电芯%d电压",i+1];
         setting[key] = value;
     }
-    setting[@"温度"] = self.checkDataModel.wd;
+    
+    NSString *wd = self.checkDataModel.wd;
+    if ([wd containsString:@"°C"]) {
+        wd = [wd stringByReplacingOccurrencesOfString:@"°C" withString:@"度"];
+    }
+    
+    setting[@"温度"] = wd;
     setting[@"最大电压差"] = self.checkDataModel.zddyc;
     setting[@"电芯总电压"] = self.checkDataModel.zdy;
     setting[@"SOH"] = self.checkDataModel.soh;

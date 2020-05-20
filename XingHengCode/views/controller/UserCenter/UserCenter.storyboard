@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -29,7 +27,7 @@
                                         <rect key="frame" x="0.0" y="55.5" width="375" height="64"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="y0Q-57-nSW" id="Gi2-eU-csi">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="63.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="64"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-mine-lanya" translatesAutoresizingMaskIntoConstraints="NO" id="Pd9-WM-Pnl">
@@ -91,6 +89,7 @@
                     <connections>
                         <outlet property="accountLabel" destination="c0j-49-m60" id="cBN-ob-vMY"/>
                         <outlet property="headerView" destination="7Hm-fe-dIC" id="2VC-Hw-PHT"/>
+                        <outlet property="logoView" destination="r49-GP-Fo7" id="OhT-Bh-6hw"/>
                         <outlet property="nickLabel" destination="Dzw-3s-hia" id="jkS-tt-7NP"/>
                         <outlet property="tableView" destination="bGd-y1-i46" id="0Jo-Ia-AYP"/>
                     </connections>
@@ -106,12 +105,12 @@
                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="img-mine-bg" translatesAutoresizingMaskIntoConstraints="NO" id="tts-X7-mF1">
                                     <rect key="frame" x="0.0" y="0.0" width="343" height="124"/>
                                 </imageView>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_mine_head" translatesAutoresizingMaskIntoConstraints="NO" id="r49-GP-Fo7">
-                                    <rect key="frame" x="12" y="19" width="90" height="90"/>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="applogo" translatesAutoresizingMaskIntoConstraints="NO" id="r49-GP-Fo7">
+                                    <rect key="frame" x="20" y="27" width="70" height="70"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     <constraints>
-                                        <constraint firstAttribute="height" constant="90" id="7hQ-Lt-I0k"/>
-                                        <constraint firstAttribute="width" constant="90" id="xyz-TX-3pm"/>
+                                        <constraint firstAttribute="width" constant="70" id="IUS-sD-Xh7"/>
+                                        <constraint firstAttribute="height" constant="70" id="a7i-Ch-WZA"/>
                                     </constraints>
                                 </imageView>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dzw-3s-hia">
@@ -163,11 +162,10 @@
                             </subviews>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
+                                <constraint firstItem="Dzw-3s-hia" firstAttribute="leading" secondItem="46M-xR-KR8" secondAttribute="leading" constant="102" id="403-Cc-bWm"/>
                                 <constraint firstItem="JcO-3t-FAo" firstAttribute="leading" secondItem="dk3-N2-eEx" secondAttribute="trailing" constant="1" id="4sl-mq-vZi"/>
-                                <constraint firstItem="r49-GP-Fo7" firstAttribute="leading" secondItem="46M-xR-KR8" secondAttribute="leading" constant="12" id="76Z-yf-rax"/>
                                 <constraint firstItem="tts-X7-mF1" firstAttribute="leading" secondItem="46M-xR-KR8" secondAttribute="leading" id="7SF-vJ-8jh"/>
                                 <constraint firstItem="tts-X7-mF1" firstAttribute="top" secondItem="46M-xR-KR8" secondAttribute="top" id="7de-FT-Brm"/>
-                                <constraint firstItem="Dzw-3s-hia" firstAttribute="leading" secondItem="r49-GP-Fo7" secondAttribute="trailing" id="FTq-zi-The"/>
                                 <constraint firstItem="9Gi-i0-fB9" firstAttribute="top" secondItem="46M-xR-KR8" secondAttribute="top" id="GqI-a3-a7D"/>
                                 <constraint firstItem="JcO-3t-FAo" firstAttribute="top" secondItem="46M-xR-KR8" secondAttribute="top" constant="54" id="Mdt-ZQ-66d"/>
                                 <constraint firstAttribute="bottom" secondItem="c0j-49-m60" secondAttribute="bottom" constant="41" id="PK4-2q-KE7"/>
@@ -175,12 +173,13 @@
                                 <constraint firstItem="dk3-N2-eEx" firstAttribute="top" secondItem="46M-xR-KR8" secondAttribute="top" constant="53" id="UGd-ht-fL5"/>
                                 <constraint firstAttribute="trailing" secondItem="c0j-49-m60" secondAttribute="trailing" constant="12" id="VOk-g8-S3c"/>
                                 <constraint firstAttribute="trailing" secondItem="9Gi-i0-fB9" secondAttribute="trailing" id="bt4-X6-T84"/>
+                                <constraint firstItem="r49-GP-Fo7" firstAttribute="top" secondItem="46M-xR-KR8" secondAttribute="top" constant="27" id="f0D-gb-4j8"/>
+                                <constraint firstItem="r49-GP-Fo7" firstAttribute="leading" secondItem="46M-xR-KR8" secondAttribute="leading" constant="20" id="hbf-HI-FKp"/>
                                 <constraint firstAttribute="bottom" secondItem="tts-X7-mF1" secondAttribute="bottom" id="l99-1i-BSm"/>
-                                <constraint firstItem="r49-GP-Fo7" firstAttribute="top" secondItem="46M-xR-KR8" secondAttribute="top" constant="19" id="pFG-XH-8ng"/>
                                 <constraint firstItem="Dzw-3s-hia" firstAttribute="top" secondItem="46M-xR-KR8" secondAttribute="top" constant="37" id="pZu-td-bnd"/>
                                 <constraint firstAttribute="trailing" secondItem="JcO-3t-FAo" secondAttribute="trailing" constant="20" id="rKU-2o-WBv"/>
+                                <constraint firstItem="c0j-49-m60" firstAttribute="leading" secondItem="46M-xR-KR8" secondAttribute="leading" constant="102" id="v3H-zg-ONH"/>
                                 <constraint firstAttribute="trailing" secondItem="tts-X7-mF1" secondAttribute="trailing" id="vFD-Hy-zIJ"/>
-                                <constraint firstItem="c0j-49-m60" firstAttribute="leading" secondItem="r49-GP-Fo7" secondAttribute="trailing" id="wMQ-MK-mIg"/>
                                 <constraint firstAttribute="trailing" secondItem="Dzw-3s-hia" secondAttribute="trailing" constant="12" id="xez-Gp-NmK"/>
                                 <constraint firstItem="9Gi-i0-fB9" firstAttribute="leading" secondItem="46M-xR-KR8" secondAttribute="leading" id="yCZ-Cm-JD8"/>
                             </constraints>
@@ -199,8 +198,8 @@
         </scene>
     </scenes>
     <resources>
+        <image name="applogo" width="120" height="120"/>
         <image name="icon-mine-lanya" width="24" height="24"/>
-        <image name="icon_mine_head" width="90" height="90"/>
         <image name="img-mine-bg" width="343" height="124"/>
         <image name="user_cell_right" width="8" height="14"/>
         <image name="user_header_right" width="13" height="16"/>

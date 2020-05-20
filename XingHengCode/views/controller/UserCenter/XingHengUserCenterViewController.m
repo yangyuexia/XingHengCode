@@ -23,6 +23,9 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *nickLabel;
 @property (weak, nonatomic) IBOutlet UILabel *accountLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *logoView;
+
+
 
 @property (strong, nonatomic) NSMutableArray *dataList;
 @property (strong, nonatomic) NSMutableArray *imageList;
@@ -87,6 +90,8 @@
 }
 
 - (void)setUpHeaderView{
+    self.logoView.layer.cornerRadius = 35;
+    self.logoView.layer.masksToBounds = YES;
     self.nickLabel.text = QWGLOBALMANAGER.configure.nickname;
     self.accountLabel.text = [NSString stringWithFormat:@"账号：%@",QWGLOBALMANAGER.configure.username];
     self.tableView.tableHeaderView = self.headerView;
