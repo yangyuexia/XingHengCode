@@ -105,12 +105,12 @@
                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="img-mine-bg" translatesAutoresizingMaskIntoConstraints="NO" id="tts-X7-mF1">
                                     <rect key="frame" x="0.0" y="0.0" width="343" height="124"/>
                                 </imageView>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="applogo" translatesAutoresizingMaskIntoConstraints="NO" id="r49-GP-Fo7">
-                                    <rect key="frame" x="20" y="27" width="70" height="70"/>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_mine_head-1" translatesAutoresizingMaskIntoConstraints="NO" id="r49-GP-Fo7">
+                                    <rect key="frame" x="8" y="17" width="90" height="90"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     <constraints>
-                                        <constraint firstAttribute="width" constant="70" id="IUS-sD-Xh7"/>
-                                        <constraint firstAttribute="height" constant="70" id="a7i-Ch-WZA"/>
+                                        <constraint firstAttribute="width" constant="90" id="2mX-3Y-hmt"/>
+                                        <constraint firstAttribute="height" constant="90" id="EeS-a7-6ya"/>
                                     </constraints>
                                 </imageView>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dzw-3s-hia">
@@ -166,6 +166,8 @@
                                 <constraint firstItem="JcO-3t-FAo" firstAttribute="leading" secondItem="dk3-N2-eEx" secondAttribute="trailing" constant="1" id="4sl-mq-vZi"/>
                                 <constraint firstItem="tts-X7-mF1" firstAttribute="leading" secondItem="46M-xR-KR8" secondAttribute="leading" id="7SF-vJ-8jh"/>
                                 <constraint firstItem="tts-X7-mF1" firstAttribute="top" secondItem="46M-xR-KR8" secondAttribute="top" id="7de-FT-Brm"/>
+                                <constraint firstItem="r49-GP-Fo7" firstAttribute="leading" secondItem="46M-xR-KR8" secondAttribute="leading" constant="8" id="B5l-v1-YpY"/>
+                                <constraint firstItem="r49-GP-Fo7" firstAttribute="top" secondItem="46M-xR-KR8" secondAttribute="top" constant="17" id="CXL-nf-kAi"/>
                                 <constraint firstItem="9Gi-i0-fB9" firstAttribute="top" secondItem="46M-xR-KR8" secondAttribute="top" id="GqI-a3-a7D"/>
                                 <constraint firstItem="JcO-3t-FAo" firstAttribute="top" secondItem="46M-xR-KR8" secondAttribute="top" constant="54" id="Mdt-ZQ-66d"/>
                                 <constraint firstAttribute="bottom" secondItem="c0j-49-m60" secondAttribute="bottom" constant="41" id="PK4-2q-KE7"/>
@@ -173,8 +175,6 @@
                                 <constraint firstItem="dk3-N2-eEx" firstAttribute="top" secondItem="46M-xR-KR8" secondAttribute="top" constant="53" id="UGd-ht-fL5"/>
                                 <constraint firstAttribute="trailing" secondItem="c0j-49-m60" secondAttribute="trailing" constant="12" id="VOk-g8-S3c"/>
                                 <constraint firstAttribute="trailing" secondItem="9Gi-i0-fB9" secondAttribute="trailing" id="bt4-X6-T84"/>
-                                <constraint firstItem="r49-GP-Fo7" firstAttribute="top" secondItem="46M-xR-KR8" secondAttribute="top" constant="27" id="f0D-gb-4j8"/>
-                                <constraint firstItem="r49-GP-Fo7" firstAttribute="leading" secondItem="46M-xR-KR8" secondAttribute="leading" constant="20" id="hbf-HI-FKp"/>
                                 <constraint firstAttribute="bottom" secondItem="tts-X7-mF1" secondAttribute="bottom" id="l99-1i-BSm"/>
                                 <constraint firstItem="Dzw-3s-hia" firstAttribute="top" secondItem="46M-xR-KR8" secondAttribute="top" constant="37" id="pZu-td-bnd"/>
                                 <constraint firstAttribute="trailing" secondItem="JcO-3t-FAo" secondAttribute="trailing" constant="20" id="rKU-2o-WBv"/>
@@ -198,8 +198,8 @@
         </scene>
     </scenes>
     <resources>
-        <image name="applogo" width="120" height="120"/>
         <image name="icon-mine-lanya" width="24" height="24"/>
+        <image name="icon_mine_head-1" width="270" height="270"/>
         <image name="img-mine-bg" width="343" height="124"/>
         <image name="user_cell_right" width="8" height="14"/>
         <image name="user_header_right" width="13" height="16"/>

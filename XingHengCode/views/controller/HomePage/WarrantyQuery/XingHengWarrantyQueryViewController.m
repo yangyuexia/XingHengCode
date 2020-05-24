@@ -93,6 +93,7 @@
     XingHengScanQueryViewController *vc = [[UIStoryboard storyboardWithName:@"WarrantyQuery" bundle:nil] instantiateViewControllerWithIdentifier:@"XingHengScanQueryViewController"];
     vc.scanBlock = ^(NSString *barCode) {
         self.textField.text = barCode;
+        [self makeAction:nil];
     };
     vc.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:vc animated:YES];
@@ -119,15 +120,9 @@
         if ([model.code integerValue] == 200) {
             
             self.queryView.hidden = NO;
-            NSString *year = @"";
-            NSString *month = @"";
-            if (model.difference/12 > 0) {
-                year = [NSString stringWithFormat:@"%ld年",model.difference/12];
-            }
-            if (model.difference%12 > 0) {
-                month = [NSString stringWithFormat:@"%ld月",model.difference%12];
-            }
-            self.userdDurationLabel.text = [NSString stringWithFormat:@"%@%@",year,month];
+            
+            
+            self.userdDurationLabel.text = [self aaaaaaaaa:model.ex_factory_date];
             
             self.outTimeLabel.text = [self getOutFactoryDate:model.ex_factory_date];
             
@@ -147,6 +142,35 @@
     
     
 }
+
+- (NSString *)aaaaaaaaa:(NSString *)outStr{
+    NSString *str = [self getOutFactoryDate:outStr];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy年MM月dd日"];
+    NSDate *fromDate = [formatter dateFromString:str];
+    NSDate *toDate = [NSDate date];
+    NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    NSDateComponents *complnents = [gregorian components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay fromDate:fromDate toDate:toDate options:0];
+   
+    NSString *year = @"";
+    NSString *month = @"";
+    NSString *day = @"";
+    
+    if (complnents.year > 0) {
+        year = [NSString stringWithFormat:@"%ld年",complnents.year];
+    }
+    if (complnents.month > 0) {
+        month = [NSString stringWithFormat:@"%ld个月",complnents.month];
+    }
+    if (complnents.day > 0) {
+        day = [NSString stringWithFormat:@"%ld天",complnents.day];
+    }
+    
+    NSString *strTime = [NSString stringWithFormat:@"%@%@%@",year,month,day];
+    return strTime;
+    
+}
+
 
 - (NSString *)getOutFactoryDate:(NSString *)date{
     NSDateFormatter *formatter1 = [[NSDateFormatter alloc] init];

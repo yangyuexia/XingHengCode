@@ -53,9 +53,9 @@
     self.label12.text = model.soh ? model.soh : @"";
     self.label13.text = model.rjbb ? model.rjbb : @"";
     self.label14.text = model.yjbb ? model.yjbb : @"";
-    self.label15.text = model.jtyc ? model.jtyc : @"N\\A";
-    self.label16.text = model.cdyc ? model.cdyc : @"N\\A";
-    self.label17.text = model.fdyc ? model.fdyc : @"N\\A";
+    self.label15.text = model.jtyc ? model.jtyc : @"N/A";
+    self.label16.text = model.cdyc ? model.cdyc : @"N/A";
+    self.label17.text = model.fdyc ? model.fdyc : @"N/A";
     self.label18.text = model.dcname ? model.dcname : @"";
 }
 

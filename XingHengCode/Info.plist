@@ -143,6 +143,8 @@
 			<false/>
 		</dict>
 	</dict>
+	<key>NSBluetoothPeripheralUsageDescription</key>
+	<string>星恒锂电想访问您的蓝牙，来连接电池检测仪</string>
 	<key>NSCameraUsageDescription</key>
 	<string>星恒锂电需要您的同意，在修改头像、身份认证上传营业执照和上传订单支付凭证的服务中，访问您的相机权限</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>

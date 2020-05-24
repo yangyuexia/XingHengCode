@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -137,12 +135,12 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3年27天" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gMc-JJ-4nm">
-                                        <rect key="frame" x="79" y="60" width="242" height="48"/>
+                                        <rect key="frame" x="79" y="60" width="300" height="48"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="48" id="PCb-06-R4K"/>
-                                            <constraint firstAttribute="width" constant="242" id="WGQ-kK-PoX"/>
+                                            <constraint firstAttribute="width" constant="300" id="WGQ-kK-PoX"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="40"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                         <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -283,7 +281,7 @@
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="F9G-7j-cyU">
-                                <rect key="frame" x="52.5" y="120" width="270" height="270"/>
+                                <rect key="frame" x="52.5" y="100" width="270" height="270"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="scan_bg" translatesAutoresizingMaskIntoConstraints="NO" id="65h-RS-QNh">
                                         <rect key="frame" x="0.0" y="0.0" width="270" height="270"/>
@@ -300,23 +298,23 @@
                                 </constraints>
                             </view>
                             <view alpha="0.40000000596046448" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zHe-az-XOC">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="120"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="100"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                             <view alpha="0.40000000596046448" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8bb-GU-v9S">
-                                <rect key="frame" x="0.0" y="120" width="52.5" height="270"/>
+                                <rect key="frame" x="0.0" y="100" width="52.5" height="270"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                             <view alpha="0.40000000596046448" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="97t-SV-4XZ">
-                                <rect key="frame" x="0.0" y="390" width="375" height="277"/>
+                                <rect key="frame" x="0.0" y="370" width="375" height="297"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                             <view alpha="0.40000000596046448" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zl3-rJ-1qV">
-                                <rect key="frame" x="322.5" y="120" width="52.5" height="270"/>
+                                <rect key="frame" x="322.5" y="100" width="52.5" height="270"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="轻点照亮" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M40-Cy-He4">
-                                <rect key="frame" x="147.5" y="458" width="80" height="20"/>
+                                <rect key="frame" x="147.5" y="438" width="80" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="80" id="Spp-dr-CpO"/>
                                     <constraint firstAttribute="height" constant="20" id="ddF-zo-32u"/>
@@ -326,14 +324,14 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-sao-light" translatesAutoresizingMaskIntoConstraints="NO" id="yfz-6N-JNg">
-                                <rect key="frame" x="171.5" y="414" width="32" height="45"/>
+                                <rect key="frame" x="171.5" y="394" width="32" height="45"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="32" id="mJM-kF-X3K"/>
                                     <constraint firstAttribute="height" constant="45" id="w2q-Lr-xbp"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="将电池组条码或二维码放入框内，即可自动扫描。" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hFx-I2-afO">
-                                <rect key="frame" x="0.0" y="491" width="375" height="20"/>
+                                <rect key="frame" x="0.0" y="471" width="375" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20" id="PVo-RX-XCK"/>
                                 </constraints>
@@ -342,7 +340,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ObP-AM-By4">
-                                <rect key="frame" x="147.5" y="403" width="80" height="80"/>
+                                <rect key="frame" x="147.5" y="383" width="80" height="80"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="80" id="0bU-ip-kL5"/>
@@ -500,6 +498,6 @@
     <resources>
         <image name="icon-query-sao" width="20" height="20"/>
         <image name="icon-sao-light" width="32" height="45"/>
-        <image name="scan_bg" width="220" height="220"/>
+        <image name="scan_bg" width="220.5" height="220.5"/>
     </resources>
 </document>

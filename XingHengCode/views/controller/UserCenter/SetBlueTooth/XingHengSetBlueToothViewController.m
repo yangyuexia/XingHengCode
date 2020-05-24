@@ -117,7 +117,26 @@
 #pragma mark ---- 搜索蓝牙设备 ----
 - (IBAction)searchAction:(id)sender {
     if (QWGLOBALMANAGER.baby.centralManager.state == CBCentralManagerStatePoweredOff) {
-        [SVProgressHUD showErrorWithStatus:@"请打开蓝牙设备"];
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:@"打开蓝牙来允许“星恒锂电”连接到配件" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"设置" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                        
+            //将字符串转换为16进制
+             NSData *encryptString = [[NSData alloc] initWithBytes:(unsigned char []){0x41, 0x70, 0x70, 0x2d, 0x50, 0x72, 0x65, 0x66, 0x73, 0x3a, 0x72, 0x6f, 0x6f, 0x74, 0x3d, 0x42, 0x6c, 0x75, 0x65, 0x74, 0x6f, 0x6f, 0x74, 0x68} length:24];
+            NSString *string = [[NSString alloc] initWithData:encryptString encoding:NSUTF8StringEncoding];
+            NSURL *url = [NSURL URLWithString:string];
+            if (@available(iOS 10.0, *)) {
+                [[UIApplication sharedApplication] openURL:url options:@{} completionHandler:nil];
+            } else {
+                [[UIApplication sharedApplication] openURL:url];
+            }
+            
+        }];
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"好" style:UIAlertActionStyleCancel handler:nil];
+        [alertController addAction:okAction];
+        [alertController addAction:cancelAction];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self presentViewController:alertController animated:YES completion:nil];
+        });
         return;
     }
     
