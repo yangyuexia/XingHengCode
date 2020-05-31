@@ -133,6 +133,8 @@
             self.state_layout_height.constant = size.height+4;
             
             
+        }else if ([model.code integerValue] == 404){
+            [SVProgressHUD showErrorWithStatus:@"电池编码数据有错误。"];
         }else{
             [SVProgressHUD showErrorWithStatus:model.message];
         }

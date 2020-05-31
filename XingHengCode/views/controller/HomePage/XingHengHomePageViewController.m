@@ -13,6 +13,7 @@
 #import "XingHengScanViewController.h"
 #import "XingHengWarrantyQueryViewController.h"
 #import "XingHengCheckRecordViewController.h"
+#import "XingHengSaleCheckViewController.h"
 
 #define BannerHeight  ((APP_W-20)*162/355)
 
@@ -236,8 +237,12 @@
             return;
         }
         
+//        XingHengScanViewController *vc = [[UIStoryboard storyboardWithName:@"Check" bundle:nil] instantiateViewControllerWithIdentifier:@"XingHengScanViewController"];
+//        vc.hidesBottomBarWhenPushed = YES;
+//        [self.navigationController pushViewController:vc animated:YES];
         
-        XingHengScanViewController *vc = [[UIStoryboard storyboardWithName:@"Check" bundle:nil] instantiateViewControllerWithIdentifier:@"XingHengScanViewController"];
+        XingHengSaleCheckViewController *vc = [[UIStoryboard storyboardWithName:@"Check" bundle:nil] instantiateViewControllerWithIdentifier:@"XingHengSaleCheckViewController"];
+        vc.fromHomePage = YES;
         vc.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:vc animated:YES];
         

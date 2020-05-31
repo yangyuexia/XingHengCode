@@ -16,6 +16,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (strong, nonatomic) NSString *boxCode;
 
+@property (assign, nonatomic) BOOL fromHomePage;
+
 @end
 
 NS_ASSUME_NONNULL_END

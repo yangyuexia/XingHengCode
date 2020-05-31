@@ -13,6 +13,7 @@
 #import "XingHengBLEConfigureViewController.h"
 #import "CustomFooterView.h"
 #import "XingHengWarrantyQueryViewController.h"
+#import "XingHengScanViewController.h"
 
 NSString * const RESULT23 = @"3A16230039000D0A";
 NSString * const RESULT24 = @"3A1624010B46000D0A";
@@ -36,7 +37,7 @@ NSString * const RESULT18 = @"3A161801002F000D0A";
 NSString * const RESULT21 = @"3A1621010038000D0A";
 
 
-@interface XingHengSaleCheckViewController () <UITableViewDataSource, UITableViewDelegate, CustomHeaderViewDelegate>
+@interface XingHengSaleCheckViewController () <UITableViewDataSource, UITableViewDelegate, CustomHeaderViewDelegate,XingHengCheckResultCellDelegate>
 {
     dispatch_source_t   send23Timer;
 }
@@ -70,6 +71,9 @@ NSString * const RESULT21 = @"3A1621010038000D0A";
 
 @property (strong, nonatomic) NSString *bleName;
 
+@property (assign, nonatomic) BOOL getBoxCode;
+@property (assign, nonatomic) NSInteger getBoxCodeIndex;
+
 - (IBAction)backAction:(id)sender;
 - (IBAction)configureAction:(id)sender;
 
@@ -91,33 +95,6 @@ NSString * const RESULT21 = @"3A1621010038000D0A";
     
 #endif
     
-    
-    //测试数据
-//    self.diagnosisPageModel = [FaultDiagnosisPageModel new];
-//    NSMutableArray *arr = [NSMutableArray array];
-//    FaultDiagnosisListModel *m1 = [FaultDiagnosisListModel new];
-//    m1.fault_code = @"E104";
-//    m1.fault_desc = @"信号连接不良";
-//    [arr addObject:m1];
-//    FaultDiagnosisListModel *m2 = [FaultDiagnosisListModel new];
-//    m2.fault_code = @"E304";
-//    m2.fault_desc = @"SOC与OCV误差大";
-//    [arr addObject:m2];
-//    FaultDiagnosisListModel *m3 = [FaultDiagnosisListModel new];
-//    m3.fault_code = @"E305";
-//    m3.fault_desc = @"电芯过压";
-//    [arr addObject:m3];
-//    FaultDiagnosisListModel *m4 = [FaultDiagnosisListModel new];
-//    m4.fault_code = @"E206";
-//    m4.fault_desc = @"SOH低";
-//    [arr addObject:m4];
-//    FaultDiagnosisListModel *m5 = [FaultDiagnosisListModel new];
-//    m5.fault_code = @"E200";
-//    m5.fault_desc = @"电芯严重欠压";
-//    [arr addObject:m5];
-//    self.diagnosisPageModel.info = (NSArray *)arr;
-    
-    
     self.currentSendFF = @"";
     self.voltageName = [NSMutableArray array];
     self.voltageArray = [NSMutableArray array];
@@ -126,7 +103,10 @@ NSString * const RESULT21 = @"3A1621010038000D0A";
     self.sendFFSuccess = NO;
     self.voltage = [NSMutableArray array];
     
-    self.titleLabel.text = [NSString stringWithFormat:@"售后检测(%@)",self.batteryInfoModel.V];
+    if (self.batteryInfoModel) {
+        self.titleLabel.text = [NSString stringWithFormat:@"售后检测(%@)",self.batteryInfoModel.V];
+    }
+    
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.backgroundColor = [UIColor clearColor];
     self.tableView.tableFooterView = [UIView new];
@@ -136,6 +116,17 @@ NSString * const RESULT21 = @"3A1621010038000D0A";
     
     [self initVoltageData];
     
+    
+    if (QWGLOBALMANAGER.baby.centralManager.state == CBCentralManagerStatePoweredOn) {
+        if ([QWUserDefault getObjectBy:BLUETOOTHUUIDSTRING]) {
+            NSString *uuid = [QWUserDefault getObjectBy:BLUETOOTHUUIDSTRING];
+            CBPeripheral * peripheral = [QWGLOBALMANAGER.baby retrievePeripheralWithUUIDString:uuid];
+            self.peripheral = peripheral;
+            QWGLOBALMANAGER.baby.cancelAllPeripheralsConnection;
+            QWGLOBALMANAGER.baby.having(self.peripheral).and.connectToPeripherals().discoverServices().discoverCharacteristics().readValueForCharacteristic().discoverDescriptorsForCharacteristic().readValueForDescriptors().begin();
+        }
+    }
+
 }
 
 - (void)setUpHeader{
@@ -163,9 +154,7 @@ NSString * const RESULT21 = @"3A1621010038000D0A";
     }else{
         QWGLOBALMANAGER.isChecking = NO;
     }
-    
-    
-    
+        
     dispatch_async(dispatch_get_main_queue(), ^{
         if (state == 0) { //蓝牙断开
             self.backgroundImage.image = [UIImage imageNamed:@"img-con-unconnect-img"];
@@ -287,8 +276,8 @@ NSString * const RESULT21 = @"3A1621010038000D0A";
     self.diagnosisPageModel = nil;
     [self.cacheOnceDic removeAllObjects];
     [self.voltageArray removeAllObjects];
-    self.tableView.tableFooterView = [UIView new];
     dispatch_async(dispatch_get_main_queue(), ^{
+        self.tableView.tableFooterView = [UIView new];
         [self.tableView reloadData];
     });
 }
@@ -322,7 +311,10 @@ NSString * const RESULT21 = @"3A1621010038000D0A";
             
             if (peripheral.state != CBPeripheralStateConnected) {
                 [self clearAllData];
-               [self updateHeaderUI:1]; QWGLOBALMANAGER.baby.having(self.peripheral).and.connectToPeripherals().discoverServices().discoverCharacteristics().readValueForCharacteristic().discoverDescriptorsForCharacteristic().readValueForDescriptors().begin();
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self updateHeaderUI:1];
+                });
+                QWGLOBALMANAGER.baby.having(self.peripheral).and.connectToPeripherals().discoverServices().discoverCharacteristics().readValueForCharacteristic().discoverDescriptorsForCharacteristic().readValueForDescriptors().begin();
             }
         }
     }
@@ -344,7 +336,9 @@ NSString * const RESULT21 = @"3A1621010038000D0A";
         code = self.boxCode;
     }
     
-    [self updateHeaderUI:1];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self updateHeaderUI:1];
+    });
 
     NSString *hexCode = [QWGLOBALMANAGER tenToHex:[code integerValue]];
     NSInteger a = [QWGLOBALMANAGER hexToTen:@"16"];
@@ -385,9 +379,11 @@ NSString * const RESULT21 = @"3A1621010038000D0A";
     }
     
     if (self.send23Once > 3) {//电池连接断开
-        [self updateHeaderUI:2];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self updateHeaderUI:2];
+        });
         [self clearAllData];
-        [self.tableView reloadData];
+        
     }
     
     NSLog(@"=============%ld",self.send23Once);
@@ -575,30 +571,40 @@ NSString * const RESULT21 = @"3A1621010038000D0A";
     
     [QWGLOBALMANAGER.baby setBlockOnCentralManagerDidUpdateState:^(CBCentralManager *central) {
         if (central.state == CBCentralManagerStatePoweredOn) {
-            [weakSelf updateHeaderUI:1];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [weakSelf updateHeaderUI:1];
+            });
             [weakSelf connectBLE];
         }else if (central.state == CBCentralManagerStatePoweredOff){
             [SVProgressHUD showErrorWithStatus:@"请打开蓝牙设备"];
             [weakSelf clearAllData];
-            [weakSelf updateHeaderUI:0];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [weakSelf updateHeaderUI:0];
+            });
         }
     }];
     
 
     //连接Peripherals成功
     [QWGLOBALMANAGER.baby setBlockOnConnected:^(CBCentralManager *central, CBPeripheral *peripheral) {
-        [weakSelf updateHeaderUI:1];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [weakSelf updateHeaderUI:1];
+        });
         weakSelf.bleName = peripheral.name;
     }];
 
 
     //断开Peripherals的连接
     [QWGLOBALMANAGER.baby setBlockOnDisconnect:^(CBCentralManager *central, CBPeripheral *peripheral, NSError *error) {
-        [weakSelf updateHeaderUI:1];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [weakSelf updateHeaderUI:1];
+        });
     }];
 
     [QWGLOBALMANAGER.baby setBlockOnFailToConnect:^(CBCentralManager *central, CBPeripheral *peripheral, NSError *error) {
-        [weakSelf updateHeaderUI:1];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [weakSelf updateHeaderUI:1];
+        });
     }];
 
 
@@ -635,13 +641,41 @@ NSString * const RESULT21 = @"3A1621010038000D0A";
 //    NSLog(@"=============%@",receiveString);
     
     if ([receiveString isEqualToString:self.currentSendFF]) { //FF
-        [self updateHeaderUI:2];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self updateHeaderUI:2];
+        });
         self.sendFFSuccess = YES;
         
     }else if ([receiveString containsString:@"3a1623"]){ //23
         self.send23Once = 0;
-        [self updateHeaderUI:3];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self updateHeaderUI:3];
+        });
         [self handle23Data:characteristic.value];
+        
+        if (self.fromHomePage && !self.getBoxCode) {
+            if (self.getBoxCodeIndex < 4) {
+                self.getBoxCodeIndex ++;
+                [self send_22];
+
+            }else{
+                //退回首页 跳转到扫码页面
+                [self release23Timer];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self.navigationController popViewControllerAnimated:NO];
+                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.01 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                        UITabBarController *vcTab = (UITabBarController *)[UIApplication sharedApplication].delegate.window.rootViewController;
+                        if ([vcTab isKindOfClass:[QWTabBar class]]) {
+                            UINavigationController *nav = (UINavigationController *)vcTab.selectedViewController;
+                            XingHengScanViewController *vc = [[UIStoryboard storyboardWithName:@"Check" bundle:nil] instantiateViewControllerWithIdentifier:@"XingHengScanViewController"];
+                            vc.hidesBottomBarWhenPushed = YES;
+                            [nav pushViewController:vc animated:YES];
+                        }
+                    });
+                });
+            }
+        }
+        
         
     }else if ([receiveString containsString:@"3a1624"]){ //24
         [self.cacheOnceDic setObject:@"100" forKey:RESULT24];
@@ -656,8 +690,17 @@ NSString * const RESULT21 = @"3A1621010038000D0A";
     }else if ([receiveString containsString:@"3a1622"]){ //22
         [self.cacheOnceDic setObject:@"100" forKey:RESULT22];
         [self handle22Data:characteristic.value];
-        [self sendAllOrder:RESULT22];
-        
+    
+        if (self.fromHomePage) {
+            self.getBoxCode = YES;
+            self.fromHomePage = NO;
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self getChengPinCode:characteristic.value];
+            });
+            
+        }else{
+            [self sendAllOrder:RESULT22];
+        }
     }else if ([receiveString containsString:@"3a167e"]){ //7E
         [self.cacheOnceDic setObject:@"100" forKey:RESULT7E];
         [self handle7EData:characteristic.value];
@@ -1159,6 +1202,65 @@ NSString * const RESULT21 = @"3A1621010038000D0A";
     }
     return percent;
 }
+
+#pragma mark ---- 接口获取电池信息 ----
+- (void)getChengPinCode:(NSData *)data{
+    
+    NSMutableArray *array = [self bleDataToArraySingle:data];
+    NSMutableString *result = [NSMutableString string];
+    for (NSString *str in array) {
+        int asciiCode = [str intValue];
+        NSString *string =[NSString stringWithFormat:@"%c",asciiCode];
+        [result appendString:string];
+    }
+    NSString *code = result;
+    
+    
+    NSString *boxCode = @"";
+    if (code.length == 20) {
+        NSString *s1 = [code substringWithRange:NSMakeRange(11, 1)];
+        NSString *s2 = [code substringWithRange:NSMakeRange(12, 1)];
+        if ([QWGLOBALMANAGER isPureNum:s1] && [QWGLOBALMANAGER isPureNum:s2]) {
+            boxCode = [NSString stringWithFormat:@"%@%@",s1,s2];
+        }
+    }
+    
+    
+    NSMutableDictionary *setting = [NSMutableDictionary dictionary];
+    setting[@"bar_code"] = code;
+    [IndexApi EqpInfoWithParams:setting success:^(id obj) {
+                
+        NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:obj[@"info"]];
+        dic[@"code"] = obj[@"code"];
+        dic[@"message"] = obj[@"message"];
+        dic[@"neww_bar_code"] = obj[@"info"][@"new_bar_code"];
+        BatteryInfoModel *model = [BatteryInfoModel parse:dic];
+
+        if ([model.code integerValue] == 200) {
+            self.boxCode = boxCode;
+            self.batteryInfoModel = model;
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (self.batteryInfoModel) {
+                    self.titleLabel.text = [NSString stringWithFormat:@"售后检测(%@)",self.batteryInfoModel.V];
+                }
+                
+                if (self.customHeaderView) {
+                    [self.customHeaderView configureData:self.batteryInfoModel];
+                }
+            });
+            
+        }else if ([model.code integerValue] == 404){
+            [SVProgressHUD showErrorWithStatus:@"电池编码数据有错误。"];
+        }else{
+            [SVProgressHUD showErrorWithStatus:model.message];
+        }
+    } failure:^(HttpException *e) {
+        [SVProgressHUD showErrorWithStatus:kWaring33];
+    }];
+    
+}
+
 
 - (void)dealloc{
     [QWGLOBALMANAGER.baby setBlockOnReadValueForCharacteristic:nil];

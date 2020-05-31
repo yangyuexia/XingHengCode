@@ -15,6 +15,7 @@
 #import "XingHengAboutViewController.h"
 #import "XingHengSubAccountViewController.h"
 #import "XingHengSetBlueToothViewController.h"
+#import "XingHengBLEConfigureViewController.h"
 
 @interface XingHengUserCenterViewController () <UITableViewDataSource,UITableViewDelegate>
 
@@ -41,8 +42,8 @@
     
     self.navigationItem.title = @"我的";
     
-    self.dataList = [NSMutableArray arrayWithObjects:@[@"锂电检测仪蓝牙设置"],@[@"子账号管理",@"关于APP"],@[@"退出登录"], nil];
-    self.imageList = [NSMutableArray arrayWithObjects:@[@"icon-mine-lanya"],@[@"icon-mine-zhanghao-manage",@"icon-mine-about-us"],@[@"icon-mine-log-out"], nil];
+    self.dataList = [NSMutableArray arrayWithObjects:@[@"锂电检测仪蓝牙设置",@"锂电检测仪通讯配置"],@[@"子账号管理",@"关于APP"],@[@"退出登录"], nil];
+    self.imageList = [NSMutableArray arrayWithObjects:@[@"icon-mine-lanya",@"icon-mine-lanya"],@[@"icon-mine-zhanghao-manage",@"icon-mine-about-us"],@[@"icon-mine-log-out"], nil];
     
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.tableFooterView = [UIView new];
@@ -185,6 +186,15 @@
     if (indexPath.section == 0 && indexPath.row == 0) {
         //蓝牙设置
         XingHengSetBlueToothViewController *vc = [[UIStoryboard storyboardWithName:@"SetBlueTooth" bundle:nil] instantiateViewControllerWithIdentifier:@"XingHengSetBlueToothViewController"];
+        vc.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:vc animated:YES];
+        
+    }else if (indexPath.section == 0 && indexPath.row == 1){
+        //通讯配置
+        XingHengBLEConfigureViewController *vc = [[UIStoryboard storyboardWithName:@"Check" bundle:nil] instantiateViewControllerWithIdentifier:@"XingHengBLEConfigureViewController"];
+        vc.configureBlock = ^(NSString * _Nonnull code) {
+            [QWUserDefault setObject:code key:BLETONGXUNCONFIGURE];
+        };
         vc.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:vc animated:YES];
         

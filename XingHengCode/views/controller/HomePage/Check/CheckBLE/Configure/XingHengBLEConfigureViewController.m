@@ -31,10 +31,27 @@
     self.restoreBtn.layer.masksToBounds = YES;
     
     
+    NSInteger code1 = 0;
+    NSInteger code2 = 0;
+    if ([QWUserDefault getObjectBy:BLETONGXUNCONFIGURE]) {
+        NSString *code = [QWUserDefault getObjectBy:BLETONGXUNCONFIGURE];
+        if (code.length == 2) {
+            code1 = [[code substringToIndex:1] integerValue];
+            code2 = [[code substringFromIndex:1] integerValue];
+        }
+    }
+    
+    
     // 通讯方式
-    _listView1 = [[EBDropdownListView alloc] initWithDataSource:[self getStyleDataSource]];
+    NSMutableArray *array1 = [NSMutableArray arrayWithArray:[self getStyleDataSource]];
+    _listView1 = [[EBDropdownListView alloc] initWithDataSource:array1];
     _listView1.frame = CGRectMake(100, 16, APP_W-130, 35);
-    _listView1.selectedIndex = 0;
+    for (NSInteger i=0; i<array1.count; i++) {
+        EBDropdownListItem *item = array1[i];
+        if ([item.itemId integerValue] == code1) {
+            _listView1.selectedIndex = i;
+        }
+    }
     [_listView1 setViewBorder:0.5 borderColor:RGBHex(qwColor4) cornerRadius:5];
     [self.view addSubview:_listView1];
     
@@ -50,10 +67,18 @@
 
     
     // 通讯参数
+    NSMutableArray *array2 = [NSMutableArray arrayWithArray:[self getParamDataSource:code1]];
     _listView2 = [[EBDropdownListView alloc] init];;
-    _listView2.dataSource = [self getParamDataSource:0];
+    _listView2.dataSource = array2;
     _listView2.frame = CGRectMake(100, 56, APP_W-130, 35);
-    _listView2.selectedIndex = 0;
+    
+    for (NSInteger i=0; i<array2.count; i++) {
+        EBDropdownListItem *item = array2[i];
+        if ([item.itemId integerValue] == code2) {
+            _listView2.selectedIndex = i;
+        }
+    }
+    
     [_listView2 setViewBorder:0.5 borderColor:RGBHex(qwColor4) cornerRadius:5];
     [self.view addSubview:_listView2];
     [_listView2 setDropdownListViewSelectedBlock:^(EBDropdownListView *dropdownListView) {

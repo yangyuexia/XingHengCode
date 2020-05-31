@@ -189,6 +189,9 @@
             vc.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:vc animated:YES];
             
+        }else if ([model.code integerValue] == 404){
+            [SVProgressHUD showErrorWithStatus:@"电池编码数据有错误。"];
+            self.timer = [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(reStartScan) userInfo:nil repeats:NO];
         }else{
             [SVProgressHUD showErrorWithStatus:model.message];
             self.timer = [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(reStartScan) userInfo:nil repeats:NO];

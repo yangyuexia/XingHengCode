@@ -33,7 +33,11 @@
 
 - (void)configureData:(id)data{
     BatteryInfoModel *model = (BatteryInfoModel *)data;
-    NSString *str = [NSString stringWithFormat:@"%@电池",model.V];
+    NSString *v = @"";
+    if (model) {
+        v = model.V;
+    }
+    NSString *str = [NSString stringWithFormat:@"%@电池",v];
     NSMutableAttributedString *attributed = [[NSMutableAttributedString alloc] initWithString:str];
     NSRange range1 = [str rangeOfString:@"电池"];
     [attributed addAttributes:@{NSForegroundColorAttributeName:RGBHex(qwColor1)} range:range1];
@@ -41,7 +45,7 @@
 }
 
 - (void)updateConnentStateView:(NSInteger)state{
-    
+        
     //0蓝牙关闭 1蓝牙未连接 2蓝牙连接 3连接
     if (state == 0) {
         [self.checkBtn setTitle:@"未连接" forState:UIControlStateNormal];
@@ -116,10 +120,12 @@
 }
 
 - (void)start{
-    if (!self.link) {
-        self.link = [CADisplayLink displayLinkWithTarget:self selector:@selector(up)];
-    }
-    [self.link addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSDefaultRunLoopMode];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if (!self.link) {
+            self.link = [CADisplayLink displayLinkWithTarget:self selector:@selector(up)];
+        }
+        [self.link addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSDefaultRunLoopMode];
+    });
 }
 
 - (void)end{
