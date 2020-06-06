@@ -603,6 +603,7 @@ static NSString *kToken12345= @"12345";
 //检查版本更新
 - (void)checkVersion
 {
+    HttpClientMgr.progressEnabled = NO;
     [System storeVersionWithParams:nil success:^(id obj) {
         NSArray *array = obj[@"results"];
         if (array.count > 0) {
