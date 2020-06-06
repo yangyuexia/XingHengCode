@@ -43,7 +43,7 @@
     self.navigationItem.title = @"我的";
     
     self.dataList = [NSMutableArray arrayWithObjects:@[@"锂电检测仪蓝牙设置",@"锂电检测仪通讯配置"],@[@"子账号管理",@"关于APP"],@[@"退出登录"], nil];
-    self.imageList = [NSMutableArray arrayWithObjects:@[@"icon-mine-lanya",@"icon-mine-lanya"],@[@"icon-mine-zhanghao-manage",@"icon-mine-about-us"],@[@"icon-mine-log-out"], nil];
+    self.imageList = [NSMutableArray arrayWithObjects:@[@"icon-mine-lanya",@"icon_mine_tongxun"],@[@"icon-mine-zhanghao-manage",@"icon-mine-about-us"],@[@"icon-mine-log-out"], nil];
     
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.tableFooterView = [UIView new];

@@ -14,6 +14,28 @@
  *     获取可升级的版本信息
  *
  */
++ (void)storeVersionWithParams:(NSDictionary *)param
+                     success:(void(^)(id obj))success
+                     failure:(void(^)(HttpException * e))failure
+{
+    NSString *urlStr = @"http://itunes.apple.com/cn/lookup?id=1516850507";
+    [HttpClientMgr post:urlStr params:param success:^(id responseObj) {
+        if (success) {
+            success(responseObj);
+        }
+    } failure:^(HttpException *e) {
+        if (failure) {
+            failure(e);
+        }
+    }];
+}
+
+
+
+/**
+ *     获取可升级的版本信息
+ *
+ */
 + (void)SysVersionWithParams:(NSDictionary *)param
                      success:(void(^)(id obj))success
                      failure:(void(^)(HttpException * e))failure

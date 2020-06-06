@@ -19,6 +19,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) BatteryCheckDataModel *checkDataModel;
 @property (strong, nonatomic) FaultDiagnosisPageModel *diagnosisPageModel;
 
+@property (strong, nonatomic) NSString *bleName;
+
 @end
 
 NS_ASSUME_NONNULL_END

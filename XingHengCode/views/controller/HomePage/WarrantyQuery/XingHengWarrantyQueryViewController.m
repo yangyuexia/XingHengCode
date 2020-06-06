@@ -222,7 +222,7 @@
     
     setting[@"warranty_status"] = self.batteryInfoModel.status; //保修状态
     setting[@"discharge_voltage"] = @"0mV"; //加载放电口电压
-    setting[@"detector"] = self.checkDataModel.dcname; //检测仪ID
+    setting[@"detector"] = self.bleName; //检测仪ID
     setting[@"load_data"] = @{}; //详细负载检测数据(json)
     setting[@"no_load_data"] = [self getNo_load_dataJson]; //详细空载检测数据（json）
     
@@ -262,7 +262,13 @@
         NSString *key = [NSString stringWithFormat:@"电芯%d电压",i+1];
         setting[key] = value;
     }
-    setting[@"温度"] = self.checkDataModel.wd;
+    
+    NSString *wd = self.checkDataModel.wd;
+    if ([wd containsString:@"°C"]) {
+        wd = [wd stringByReplacingOccurrencesOfString:@"°C" withString:@"度"];
+    }
+    
+    setting[@"温度"] = wd;
     setting[@"最大电压差"] = self.checkDataModel.zddyc;
     setting[@"电芯总电压"] = self.checkDataModel.zdy;
     setting[@"SOH"] = self.checkDataModel.soh;

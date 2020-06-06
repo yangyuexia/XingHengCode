@@ -592,10 +592,41 @@ static NSString *kToken12345= @"12345";
     }
     [QWUserDefault setBool:NO key:APP_LOGIN_STATUS];
 }
-//
+
+//版本
+-(NSString *)version{
+    NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+    NSString *app_Version = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
+    return app_Version;
+}
+
 //检查版本更新
 - (void)checkVersion
 {
+    [System storeVersionWithParams:nil success:^(id obj) {
+        NSArray *array = obj[@"results"];
+        if (array.count > 0) {
+            NSString * version = obj[@"results"][0][@"version"];//线上最新版本
+            NSString *currentVersion= [self version];//当前用户版本
+            BOOL result= [currentVersion compare:version] == NSOrderedAscending;
+            if (result) {//需要更新
+                //调用弹框
+                VersionModel *model = [VersionModel new];
+                model.remark = obj[@"results"][0][@"releaseNotes"];
+                model.downLoadUrl = @"http://itunes.apple.com/cn/lookup?id=1516850507";
+                model.version = version;
+                installUrl = model.downLoadUrl;
+                [self showNormalUpdateAlert:model];
+            }
+        }        
+    } failure:^(HttpException *e) {
+        
+    }];
+    
+    
+    
+    return;
+    
     if (self.boolLoadFromFirstIn) {
         self.boolLoadFromFirstIn = NO;
         return;

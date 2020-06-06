@@ -49,6 +49,12 @@ AppDelegate *app = nil;
 
     [QWGLOBALMANAGER getAllMessage];
     
+    
+    if (![QWUserDefault getObjectBy:BLETONGXUNCONFIGURE]) {
+        [QWUserDefault setObject:@"20" key:BLETONGXUNCONFIGURE];
+    }
+    
+    
     [self initforLaunch];
     
     return YES;

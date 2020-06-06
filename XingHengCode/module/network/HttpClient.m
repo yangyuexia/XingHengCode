@@ -246,6 +246,15 @@
         }
         
         
+        
+        if ([path containsString:@"//itunes.apple.com/"]) {
+            success(responseObject);
+            return;
+        }
+        
+        
+        
+        
         if (success) {
             
             id newResponseObject = responseObject;

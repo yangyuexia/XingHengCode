@@ -253,6 +253,7 @@ NSString * const RESULT21 = @"3A1621010038000D0A";
 - (void)applyAction{
     XingHengWarrantyQueryViewController *vc = [[UIStoryboard storyboardWithName:@"WarrantyQuery" bundle:nil] instantiateViewControllerWithIdentifier:@"XingHengWarrantyQueryViewController"];
     vc.fromHomePage = NO;
+    vc.bleName = self.bleName;
     vc.batteryInfoModel = self.batteryInfoModel;
     vc.checkDataModel = self.checkDataModel;
     vc.diagnosisPageModel = self.diagnosisPageModel;
@@ -656,7 +657,7 @@ NSString * const RESULT21 = @"3A1621010038000D0A";
         if (self.fromHomePage && !self.getBoxCode) {
             if (self.getBoxCodeIndex < 4) {
                 self.getBoxCodeIndex ++;
-                [self send_22];
+                [self send_7E];
 
             }else{
                 //退回首页 跳转到扫码页面
@@ -690,7 +691,12 @@ NSString * const RESULT21 = @"3A1621010038000D0A";
     }else if ([receiveString containsString:@"3a1622"]){ //22
         [self.cacheOnceDic setObject:@"100" forKey:RESULT22];
         [self handle22Data:characteristic.value];
+        [self sendAllOrder:RESULT22];
     
+    }else if ([receiveString containsString:@"3a167e"]){ //7E
+        [self.cacheOnceDic setObject:@"100" forKey:RESULT7E];
+        [self handle7EData:characteristic.value];
+        
         if (self.fromHomePage) {
             self.getBoxCode = YES;
             self.fromHomePage = NO;
@@ -699,12 +705,9 @@ NSString * const RESULT21 = @"3A1621010038000D0A";
             });
             
         }else{
-            [self sendAllOrder:RESULT22];
+            [self sendAllOrder:RESULT7E];
         }
-    }else if ([receiveString containsString:@"3a167e"]){ //7E
-        [self.cacheOnceDic setObject:@"100" forKey:RESULT7E];
-        [self handle7EData:characteristic.value];
-        [self sendAllOrder:RESULT7E];
+                
         
     }else if ([receiveString containsString:@"3a160a"]){ //0A
         [self.cacheOnceDic setObject:@"100" forKey:RESULT0A];
@@ -983,6 +986,7 @@ NSString * const RESULT21 = @"3A1621010038000D0A";
 
 #pragma mark ---- 故障诊断 ----
 - (void)faultDiagnosis{
+
     NSMutableDictionary *setting = [NSMutableDictionary dictionary];
     setting[@"barcode"] = self.batteryInfoModel.bar_code; //电池条码
     setting[@"semiCode"] = self.checkDataModel.bcpCode; //成品条码

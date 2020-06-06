@@ -15,6 +15,15 @@
  *     获取可升级的版本信息
  *
  */
++ (void)storeVersionWithParams:(NSDictionary *)param
+                     success:(void(^)(id obj))success
+                       failure:(void(^)(HttpException * e))failure;
+
+
+/**
+ *     获取可升级的版本信息
+ *
+ */
 + (void)SysVersionWithParams:(NSDictionary *)param
                   success:(void(^)(id obj))success
                   failure:(void(^)(HttpException * e))failure;
