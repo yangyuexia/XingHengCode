@@ -279,6 +279,7 @@
         [QWGLOBALMANAGER clearAccountInformation:YES];
         LoginViewController *vc = [[UIStoryboard storyboardWithName:@"Login" bundle:nil] instantiateViewControllerWithIdentifier:@"LoginViewController"];
         UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
+        nav.modalPresentationStyle = 0;
         [self presentViewController:nav animated:YES completion:nil];
     }
     

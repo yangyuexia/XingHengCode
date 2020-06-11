@@ -276,6 +276,7 @@ static NSString *kToken12345= @"12345";
         
         LoginViewController *vc = [[UIStoryboard storyboardWithName:@"Login" bundle:nil] instantiateViewControllerWithIdentifier:@"LoginViewController"];
         UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
+        nav.modalPresentationStyle = 0;
         [QWGLOBALMANAGER.tabBar presentViewController:nav animated:YES completion:nil];
         
         

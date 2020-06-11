@@ -143,6 +143,8 @@
 			<false/>
 		</dict>
 	</dict>
+	<key>NSBluetoothAlwaysUsageDescription</key>
+	<string>星恒锂电想访问您的蓝牙，来连接电池检测仪</string>
 	<key>NSBluetoothPeripheralUsageDescription</key>
 	<string>星恒锂电想访问您的蓝牙，来连接电池检测仪</string>
 	<key>NSCameraUsageDescription</key>

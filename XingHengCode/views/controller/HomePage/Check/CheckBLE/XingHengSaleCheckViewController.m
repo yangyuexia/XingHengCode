@@ -654,13 +654,11 @@ NSString * const RESULT21 = @"3A1621010038000D0A";
         });
         [self handle23Data:characteristic.value];
         
+        
         if (self.fromHomePage && !self.getBoxCode) {
             if (self.getBoxCodeIndex < 4) {
                 self.getBoxCodeIndex ++;
-                [self send_7E];
-
-            }else{
-                //退回首页 跳转到扫码页面
+                
                 [self release23Timer];
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [self.navigationController popViewControllerAnimated:NO];
@@ -674,8 +672,37 @@ NSString * const RESULT21 = @"3A1621010038000D0A";
                         }
                     });
                 });
+
+            }else{
+                //退回首页 跳转到扫码页面
+                [self send_7E];
             }
         }
+        
+        
+        
+//        if (self.fromHomePage && !self.getBoxCode) {
+//            if (self.getBoxCodeIndex < 4) {
+//                self.getBoxCodeIndex ++;
+//                [self send_7E];
+//
+//            }else{
+//                //退回首页 跳转到扫码页面
+//                [self release23Timer];
+//                dispatch_async(dispatch_get_main_queue(), ^{
+//                    [self.navigationController popViewControllerAnimated:NO];
+//                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.01 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//                        UITabBarController *vcTab = (UITabBarController *)[UIApplication sharedApplication].delegate.window.rootViewController;
+//                        if ([vcTab isKindOfClass:[QWTabBar class]]) {
+//                            UINavigationController *nav = (UINavigationController *)vcTab.selectedViewController;
+//                            XingHengScanViewController *vc = [[UIStoryboard storyboardWithName:@"Check" bundle:nil] instantiateViewControllerWithIdentifier:@"XingHengScanViewController"];
+//                            vc.hidesBottomBarWhenPushed = YES;
+//                            [nav pushViewController:vc animated:YES];
+//                        }
+//                    });
+//                });
+//            }
+//        }
         
         
     }else if ([receiveString containsString:@"3a1624"]){ //24
