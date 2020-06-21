@@ -58,3 +58,7 @@
 @implementation FaultDiagnosisListModel
 
 @end
+
+@implementation PowerInfoModel
+
+@end

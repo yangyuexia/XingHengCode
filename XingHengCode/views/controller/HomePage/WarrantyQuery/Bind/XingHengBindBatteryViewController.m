@@ -60,7 +60,7 @@
     setting[@"bar_code"] = self.textField.text;
     [IndexApi EqpBandWithParams:setting success:^(id obj) {
         BaseAPIModel *model = [BaseAPIModel parse:obj];
-        if ([model.code integerValue] == 0) {
+        if ([model.code integerValue] == 200) {
             [SVProgressHUD showSuccessWithStatus:@"更换成功"];
             [self.navigationController popToRootViewControllerAnimated:YES];
         }else{

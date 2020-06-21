@@ -144,4 +144,24 @@
     }];
 }
 
+
+/**
+ *     权限控制
+ *
+ */
++ (void)PowerInfoWithParams:(NSDictionary *)param
+                             success:(void(^)(id obj))success
+                             failure:(void(^)(HttpException * e))failure;
+{
+    [HttpClientMgr post:[NSString stringWithFormat:@"%@%@",YINIU_BASE_URL,PowerInfo] params:param success:^(id responseObj) {
+        if (success) {
+            success(responseObj);
+        }
+    } failure:^(HttpException *e) {
+        if (failure) {
+            failure(e);
+        }
+    }];
+}
+
 @end

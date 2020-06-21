@@ -44,6 +44,7 @@ typedef NS_ENUM(NSInteger, Enum_Notification_Type)  {
     //系统
     NotifAppCheckVersion,
     Notifaaaaaaa,
+    NotifrefreshHomePage,
     NotifRefreshAppayService,
     NotifIndexShowNotOpen,
     NotifRefreshShopCartData,

@@ -44,14 +44,26 @@
     self.bannerList = [NSMutableArray array];
     [self.bannerList addObject:@"bg_banner_blue"];
     
-    self.dataList = [NSMutableArray array];
+    [self contentInsetHeaderView];
+    [self setUpBannerView];
     
-    HomeUIModel *model1 = [HomeUIModel new];
-    model1.icon = @"icon-home-after-sale";
-    model1.title = @"售后检测";
-    model1.content1 = @"After-sale";
-    model1.content2 = @"Testing";
-    [self.dataList addObject:model1];
+    [self configureData];
+    
+}
+
+- (void)configureData{
+    self.dataList = [NSMutableArray array];
+    [self.dataList removeAllObjects];
+    
+    if (QWGLOBALMANAGER.powerInfoModel.check.count > 0) {
+        HomeUIModel *model1 = [HomeUIModel new];
+        model1.icon = @"icon-home-after-sale";
+        model1.title = @"售后检测";
+        model1.content1 = @"After-sale";
+        model1.content2 = @"Testing";
+        [self.dataList addObject:model1];
+    }
+    
     
     HomeUIModel *model2 = [HomeUIModel new];
     model2.icon = @"icon-home-test-records";
@@ -67,12 +79,15 @@
     model3.content2 = @"Querying";
     [self.dataList addObject:model3];
     
-    HomeUIModel *model4 = [HomeUIModel new];
-    model4.icon = @"icon-home-logistics";
-    model4.title = @"物流管理";
-    model4.content1 = @"Logistics";
-    model4.content2 = @"Management";
-    [self.dataList addObject:model4];
+    if (QWGLOBALMANAGER.powerInfoModel.logistics.count > 0) {
+        HomeUIModel *model4 = [HomeUIModel new];
+        model4.icon = @"icon-home-logistics";
+        model4.title = @"物流管理";
+        model4.content1 = @"Logistics";
+        model4.content2 = @"Management";
+        [self.dataList addObject:model4];
+    }
+    
     
     HomeUIModel *model5 = [HomeUIModel new];
     model5.icon = @"icon-home-data-report";
@@ -88,9 +103,9 @@
     model6.content2 = @"Guide";
     [self.dataList addObject:model6];
     
-
-    [self contentInsetHeaderView];
-    [self setUpBannerView];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.collectionView reloadData];
+    });
     
 }
 
@@ -169,7 +184,7 @@
 
 #pragma mark ----CollectionView 代理
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
-    return 6;
+    return self.dataList.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
@@ -206,7 +221,10 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     [collectionView deselectItemAtIndexPath:indexPath animated:YES];
     
-    if (indexPath.row == 0) {
+    HomeUIModel *uiModel = self.dataList[indexPath.row];
+    
+    
+    if ([uiModel.title isEqualToString:@"售后检测"]) {
         //售后检测
         if (QWGLOBALMANAGER.baby.centralManager.state == CBCentralManagerStatePoweredOff) {
             UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:@"打开蓝牙来允许“星恒锂电”连接到配件" preferredStyle:UIAlertControllerStyleAlert];
@@ -247,26 +265,26 @@
         [self.navigationController pushViewController:vc animated:YES];
         
         
-    }else if (indexPath.row == 1){
+    }else if ([uiModel.title isEqualToString:@"检测记录"]){
         //检测记录
         XingHengCheckRecordViewController *vc = [[UIStoryboard storyboardWithName:@"CheckRecord" bundle:nil] instantiateViewControllerWithIdentifier:@"XingHengCheckRecordViewController"];
         vc.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:vc animated:YES];
         
-    }else if (indexPath.row == 2){
+    }else if ([uiModel.title isEqualToString:@"保修期查询"]){
         //保修期查询
         XingHengWarrantyQueryViewController *vc = [[UIStoryboard storyboardWithName:@"WarrantyQuery" bundle:nil] instantiateViewControllerWithIdentifier:@"XingHengWarrantyQueryViewController"];
         vc.fromHomePage = YES;
         vc.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:vc animated:YES];
         
-    }else if (indexPath.row == 3){
+    }else if ([uiModel.title isEqualToString:@"物流管理"]){
         //物流管理
         
-    }else if (indexPath.row == 4){
+    }else if ([uiModel.title isEqualToString:@"数据简报"]){
         //数据简报
         
-    }else if (indexPath.row == 5){
+    }else if ([uiModel.title isEqualToString:@"新手指南"]){
         //新手指南
         
     }
@@ -281,6 +299,9 @@
         UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
         nav.modalPresentationStyle = 0;
         [self presentViewController:nav animated:YES completion:nil];
+        
+    }else if (type == NotifrefreshHomePage){
+        [self configureData];
     }
     
 }

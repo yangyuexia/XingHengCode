@@ -175,7 +175,7 @@ NSString * const RESULT21 = @"3A1621010038000D0A";
     [self.navigationController setNavigationBarHidden:YES animated:YES];
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
     [self babyDelegate];
-    [self create23Timer];
+//    [self create23Timer];
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
@@ -216,7 +216,9 @@ NSString * const RESULT21 = @"3A1621010038000D0A";
     if (section == 0 && self.diagnosisPageModel) {
         return 1;
     }else if (section == 1 && self.voltageArray.count > 0) {
-        return 1;
+        if ([QWGLOBALMANAGER.powerInfoModel.check containsObject:@"2001"]) {
+            return 1;
+        }
     }
     return 0;
 }
@@ -269,8 +271,60 @@ NSString * const RESULT21 = @"3A1621010038000D0A";
     [self.customHeaderView checkingState];
     [self clearAllData];
     [self.tableView reloadData];
+    
+    if (self.fromHomePage) {
+        self.getBoxCode = NO;
+        self.getBoxCodeIndex = 0;
+        [self autoGetChengPinCode];
+        
+    }else{
+        [self checkProcessAction];
+    }
+}
+
+- (void)autoGetChengPinCode{
+
+    //如果已经获取到条码 return
+    if (!self.fromHomePage || self.getBoxCode) {
+        return;
+    }
+    
+    if (self.getBoxCodeIndex < 4) {
+        //如果发送次数<4，延迟0.2s继续发送指令
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            self.getBoxCodeIndex ++;
+            [self send_7E];
+            [self autoGetChengPinCode];
+        });
+    }else{
+        //如果发送次数>4
+        //退回首页 跳转到扫码页面
+        [self release23Timer];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.navigationController popViewControllerAnimated:NO];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.01 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                UITabBarController *vcTab = (UITabBarController *)[UIApplication sharedApplication].delegate.window.rootViewController;
+                if ([vcTab isKindOfClass:[QWTabBar class]]) {
+                    UINavigationController *nav = (UINavigationController *)vcTab.selectedViewController;
+                    XingHengScanViewController *vc = [[UIStoryboard storyboardWithName:@"Check" bundle:nil] instantiateViewControllerWithIdentifier:@"XingHengScanViewController"];
+                    vc.hidesBottomBarWhenPushed = YES;
+                    [nav pushViewController:vc animated:YES];
+                }
+            });
+        });
+    }
+}
+
+#pragma mark ---- 正常检测流程 ----
+- (void)checkProcessAction{
+    QWGLOBALMANAGER.isChecking = YES;
+    [self release23Timer];
+    [self.customHeaderView checkingState];
+    [self clearAllData];
+    [self.tableView reloadData];
     [self send_24];
 }
+
 
 #pragma mark ---- 清空所有数据 ----
 - (void)clearAllData{
@@ -291,10 +345,7 @@ NSString * const RESULT21 = @"3A1621010038000D0A";
         //转成16进制
         [QWUserDefault setObject:code key:BLETONGXUNCONFIGURE];
         [weakSelf.voltageName removeAllObjects];
-        weakSelf.tableView.tableFooterView = [UIView new];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [weakSelf.tableView reloadData];
-        });
+        [weakSelf clearAllData];
         weakSelf.sendFFSuccess = NO;
         [weakSelf send_FF];
     };
@@ -645,7 +696,9 @@ NSString * const RESULT21 = @"3A1621010038000D0A";
         dispatch_async(dispatch_get_main_queue(), ^{
             [self updateHeaderUI:2];
         });
+        
         self.sendFFSuccess = YES;
+        [self create23Timer];
         
     }else if ([receiveString containsString:@"3a1623"]){ //23
         self.send23Once = 0;
@@ -653,56 +706,6 @@ NSString * const RESULT21 = @"3A1621010038000D0A";
             [self updateHeaderUI:3];
         });
         [self handle23Data:characteristic.value];
-        
-        
-        if (self.fromHomePage && !self.getBoxCode) {
-            if (self.getBoxCodeIndex < 4) {
-                self.getBoxCodeIndex ++;
-                
-                [self release23Timer];
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [self.navigationController popViewControllerAnimated:NO];
-                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.01 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                        UITabBarController *vcTab = (UITabBarController *)[UIApplication sharedApplication].delegate.window.rootViewController;
-                        if ([vcTab isKindOfClass:[QWTabBar class]]) {
-                            UINavigationController *nav = (UINavigationController *)vcTab.selectedViewController;
-                            XingHengScanViewController *vc = [[UIStoryboard storyboardWithName:@"Check" bundle:nil] instantiateViewControllerWithIdentifier:@"XingHengScanViewController"];
-                            vc.hidesBottomBarWhenPushed = YES;
-                            [nav pushViewController:vc animated:YES];
-                        }
-                    });
-                });
-
-            }else{
-                //退回首页 跳转到扫码页面
-                [self send_7E];
-            }
-        }
-        
-        
-        
-//        if (self.fromHomePage && !self.getBoxCode) {
-//            if (self.getBoxCodeIndex < 4) {
-//                self.getBoxCodeIndex ++;
-//                [self send_7E];
-//
-//            }else{
-//                //退回首页 跳转到扫码页面
-//                [self release23Timer];
-//                dispatch_async(dispatch_get_main_queue(), ^{
-//                    [self.navigationController popViewControllerAnimated:NO];
-//                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.01 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//                        UITabBarController *vcTab = (UITabBarController *)[UIApplication sharedApplication].delegate.window.rootViewController;
-//                        if ([vcTab isKindOfClass:[QWTabBar class]]) {
-//                            UINavigationController *nav = (UINavigationController *)vcTab.selectedViewController;
-//                            XingHengScanViewController *vc = [[UIStoryboard storyboardWithName:@"Check" bundle:nil] instantiateViewControllerWithIdentifier:@"XingHengScanViewController"];
-//                            vc.hidesBottomBarWhenPushed = YES;
-//                            [nav pushViewController:vc animated:YES];
-//                        }
-//                    });
-//                });
-//            }
-//        }
         
         
     }else if ([receiveString containsString:@"3a1624"]){ //24
@@ -724,13 +727,13 @@ NSString * const RESULT21 = @"3A1621010038000D0A";
         [self.cacheOnceDic setObject:@"100" forKey:RESULT7E];
         [self handle7EData:characteristic.value];
         
-        if (self.fromHomePage) {
+    
+        if (self.fromHomePage && !self.getBoxCode) {
             self.getBoxCode = YES;
-            self.fromHomePage = NO;
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self getChengPinCode:characteristic.value];
             });
-            
+
         }else{
             [self sendAllOrder:RESULT7E];
         }
@@ -821,15 +824,19 @@ NSString * const RESULT21 = @"3A1621010038000D0A";
 
 - (void)handle23Data:(NSData *)data{
     NSMutableArray *array = [self bleDataToArraySingle:data];
-    NSArray *secondArray = [self getBitFromInt:[array[2] intValue]];
-    NSArray *thirdArray = [self getBitFromInt:[array[3] intValue]];
-    
-    self.checkDataModel.chg_mos_err = secondArray[0]; //充电MOS 失效
-    self.checkDataModel.ovpf = secondArray[1]; //充电严重过压
-    self.checkDataModel.bad_cell = secondArray[2]; //电芯故障
-    self.checkDataModel.unbalance = secondArray[3]; //电芯不平
-    self.checkDataModel.ntc_fail = thirdArray[4]; //温度探头损坏
-    self.checkDataModel.fuse_cut = thirdArray[3]; //保险丝熔断
+    if (array.count >= 4) {
+        
+         NSArray *secondArray = [self getBitFromInt:[array[2] intValue]];
+           NSArray *thirdArray = [self getBitFromInt:[array[3] intValue]];
+
+           self.checkDataModel.chg_mos_err = secondArray[0]; //充电MOS 失效
+           self.checkDataModel.ovpf = secondArray[1]; //充电严重过压
+           self.checkDataModel.bad_cell = secondArray[2]; //电芯故障
+           self.checkDataModel.unbalance = secondArray[3]; //电芯不平
+           self.checkDataModel.ntc_fail = thirdArray[4]; //温度探头损坏
+           self.checkDataModel.fuse_cut = thirdArray[3]; //保险丝熔断
+    }
+   
 }
 
 - (NSArray *)getBitFromInt:(int)aaaa{
@@ -909,7 +916,7 @@ NSString * const RESULT21 = @"3A1621010038000D0A";
         crt = (int)(char)~crt+1; //取反+1，获得补码值 电流数据就是带符号的f数据
         crt = -crt;
     }
-    self.checkDataModel.ssdl = [NSString stringWithFormat:@"%ldmv",crt]; //mv
+    self.checkDataModel.ssdl = [NSString stringWithFormat:@"%ldmA",crt]; //mv
 
 }
 
@@ -1014,6 +1021,13 @@ NSString * const RESULT21 = @"3A1621010038000D0A";
 #pragma mark ---- 故障诊断 ----
 - (void)faultDiagnosis{
 
+    //故障测试
+//    self.checkDataModel.soh = @"0.01";
+
+    
+    
+    
+
     NSMutableDictionary *setting = [NSMutableDictionary dictionary];
     setting[@"barcode"] = self.batteryInfoModel.bar_code; //电池条码
     setting[@"semiCode"] = self.checkDataModel.bcpCode; //成品条码
@@ -1084,7 +1098,7 @@ NSString * const RESULT21 = @"3A1621010038000D0A";
     
     [IndexApi EqpDetectionResultWithParams:setting success:^(id obj) {
         BaseAPIModel *model = [BaseAPIModel parse:obj];
-        if ([model.code integerValue] == 0) {
+        if ([model.code integerValue] == 200) {
             
         }
     } failure:^(HttpException *e) {
@@ -1279,6 +1293,9 @@ NSString * const RESULT21 = @"3A1621010038000D0A";
                 if (self.customHeaderView) {
                     [self.customHeaderView configureData:self.batteryInfoModel];
                 }
+                
+                [self checkProcessAction];
+                
             });
             
         }else if ([model.code integerValue] == 404){

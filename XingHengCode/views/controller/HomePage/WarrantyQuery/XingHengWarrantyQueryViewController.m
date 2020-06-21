@@ -228,7 +228,7 @@
     
     [IndexApi EqpDetectionResultWithParams:setting success:^(id obj) {
         BaseAPIModel *model = [BaseAPIModel parse:obj];
-        if ([model.code integerValue] == 0) {
+        if ([model.code integerValue] == 200) {
             
             UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"厂家授权售后服务" message:self.batteryInfoModel.status preferredStyle:UIAlertControllerStyleAlert];
             UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {

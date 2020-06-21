@@ -68,6 +68,7 @@
         [[UITabBar appearance] setShadowImage:[UIImage new]];
         [[UITabBar appearance] setBackgroundImage:[[UIImage alloc]init]];
         [[UITabBar appearance] setTranslucent:NO];
+        [[UITabBar appearance] setTintColor:RGBHex(qwColor6)];
     }
 }
 

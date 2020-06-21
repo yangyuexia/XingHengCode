@@ -16,7 +16,11 @@
     if (page.info.count == 0) {
         return 130+30;
     }else{
-        return 270-35+page.info.count*20;
+        if ([QWGLOBALMANAGER.powerInfoModel.check containsObject:@"2002"]) {
+            return 270-35+page.info.count*20;
+        }else{
+            return 270-35+page.info.count*20-60;
+        }
     }
 }
 
@@ -55,6 +59,12 @@
         self.descLabel.text = @"经检测发现电池存在故障，需要进行售后处理";
         self.desc_layout_height.constant = 20;
         self.applyBtn.hidden = self.containerView.hidden = NO;
+        
+        if ([QWGLOBALMANAGER.powerInfoModel.check containsObject:@"2002"]) {
+            self.applyBtn.hidden = NO;
+        }else{
+            self.applyBtn.hidden = YES;
+        }
         
         //故障列表
         [self setUpFault:page.info];

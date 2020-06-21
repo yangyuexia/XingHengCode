@@ -134,3 +134,9 @@
 @property (strong, nonatomic) NSString *fault_code; //故障编码
 @end
 
+@interface PowerInfoModel : BaseAPIModel
+@property (strong, nonatomic) NSArray *subaccount;
+@property (strong, nonatomic) NSArray *logistics;
+@property (strong, nonatomic) NSArray *check;
+@property (strong, nonatomic) NSArray *firmware;
+@end

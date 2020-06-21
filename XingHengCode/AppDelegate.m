@@ -36,6 +36,7 @@ AppDelegate *app = nil;
     
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     
+    [self queryPower];
     
     //talking
     QWGLOBALMANAGER.isLoadH5=NO;
@@ -58,6 +59,22 @@ AppDelegate *app = nil;
     [self initforLaunch];
     
     return YES;
+}
+
+- (void)queryPower{
+    HttpClientMgr.progressEnabled = NO;
+    [IndexApi PowerInfoWithParams:nil success:^(id obj) {
+        NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:obj[@"power"]];
+        dic[@"code"] = obj[@"code"];
+        dic[@"message"] = obj[@"message"];
+        PowerInfoModel *model = [PowerInfoModel parse:dic];
+        if ([model.code integerValue] == 200) {
+            QWGLOBALMANAGER.powerInfoModel = model;
+            [QWGLOBALMANAGER postNotif:NotifrefreshHomePage data:nil object:nil];
+        }
+    } failure:^(HttpException *e) {
+        
+    }];
 }
 
 

@@ -71,4 +71,13 @@
                              failure:(void(^)(HttpException * e))failure;
 
 
+/**
+ *     权限控制
+ *
+ */
++ (void)PowerInfoWithParams:(NSDictionary *)param
+                             success:(void(^)(id obj))success
+                             failure:(void(^)(HttpException * e))failure;
+
+
 @end

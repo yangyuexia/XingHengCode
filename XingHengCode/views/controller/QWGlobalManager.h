@@ -41,6 +41,7 @@ typedef struct RedPoint RedPoint;
     NSString * installUrl;
 }
 
+@property (strong, nonatomic) PowerInfoModel *powerInfoModel;
 @property (strong, nonatomic) BabyBluetooth *baby;
 @property (strong, nonatomic) NSString * installUrl;
 

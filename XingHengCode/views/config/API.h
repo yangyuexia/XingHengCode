@@ -56,7 +56,7 @@
 #define EqpDetectionResult                  @"eqp/detectionResult"                  //检测结果提交
 #define EqpBand                             @"eqp/band"                             //新旧电池绑定
 #define CtmHasAccount                       @"ctm/hasAccount"                       //验证账号是否存在
-
+#define PowerInfo                           @"power/info"
 
 
 
