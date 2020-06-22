@@ -875,7 +875,7 @@ NSString * const RESULT21 = @"3A1621010038000D0A";
     float max =[[self.voltageArray valueForKeyPath:@"@max.floatValue"] floatValue];
     float min =[[self.voltageArray valueForKeyPath:@"@min.floatValue"] floatValue];
     float reduce = max-min;
-    self.checkDataModel.zddyc = [NSString localizedStringWithFormat:@"%.1fmv",reduce];
+    self.checkDataModel.zddyc = [NSString localizedStringWithFormat:@"%.1fmV",reduce];
     
     int soc = [self checkPercent:max/1000] - [self checkPercent:min/1000];
     self.checkDataModel.soc = [NSString stringWithFormat:@"%d%%",soc];
@@ -941,7 +941,7 @@ NSString * const RESULT21 = @"3A1621010038000D0A";
 
 - (void)handle09Data:(NSData *)data{
     NSMutableArray *arr = [self bleDataToArrayDouble:data];
-    self.checkDataModel.zdy = [NSString stringWithFormat:@"%@mv",arr[0]];
+    self.checkDataModel.zdy = [NSString stringWithFormat:@"%@mV",arr[0]];
 }
 
 - (void)handle0FData:(NSData *)data{
@@ -972,12 +972,12 @@ NSString * const RESULT21 = @"3A1621010038000D0A";
 
 - (void)handle980Data:(NSData *)data{
     NSMutableArray *arr = [self bleDataToArrayDouble:data];
-    self.checkDataModel.jtyc = [NSString stringWithFormat:@"%@mv",arr[1]];
+    self.checkDataModel.jtyc = [NSString stringWithFormat:@"%@mV",arr[1]];
 }
 
 - (void)handle981Data:(NSData *)data{
     NSMutableArray *arr = [self bleDataToArrayDouble:data];
-    self.checkDataModel.cdyc = [NSString stringWithFormat:@"%@mv",arr[1]];
+    self.checkDataModel.cdyc = [NSString stringWithFormat:@"%@mV",arr[1]];
 
     NSMutableArray *singleArr = [self bleDataToArraySingle:data];
     int dlbl = [singleArr[1] intValue];
@@ -986,7 +986,7 @@ NSString * const RESULT21 = @"3A1621010038000D0A";
 
 - (void)handle982Data:(NSData *)data{
     NSMutableArray *arr = [self bleDataToArrayDouble:data];
-    self.checkDataModel.fdyc = [NSString stringWithFormat:@"%@mv",arr[1]];
+    self.checkDataModel.fdyc = [NSString stringWithFormat:@"%@mV",arr[1]];
 
     NSMutableArray *singleArr = [self bleDataToArraySingle:data];
     int dlbl = [singleArr[1] intValue];
