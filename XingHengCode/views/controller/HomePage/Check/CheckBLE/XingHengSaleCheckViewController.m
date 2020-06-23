@@ -141,10 +141,13 @@ NSString * const RESULT21 = @"3A1621010038000D0A";
 
 - (void)setUpFooter{
     QWGLOBALMANAGER.isChecking = NO;
-    self.CustomFooterView = [[CustomFooterView alloc] initWithFrame:CGRectMake(0, 0, APP_W, 360)];
-    [self.CustomFooterView configureData:self.checkDataModel];
-    self.tableView.tableFooterView = self.CustomFooterView;
+    if ([QWGLOBALMANAGER.powerInfoModel.check containsObject:@"2001"]) {
+        self.CustomFooterView = [[CustomFooterView alloc] initWithFrame:CGRectMake(0, 0, APP_W, 360)];
+        [self.CustomFooterView configureData:self.checkDataModel];
+        self.tableView.tableFooterView = self.CustomFooterView;
+    }
     [self.tableView reloadData];
+    
 }
 
 
@@ -729,7 +732,6 @@ NSString * const RESULT21 = @"3A1621010038000D0A";
         
     
         if (self.fromHomePage && !self.getBoxCode) {
-            self.getBoxCode = YES;
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self getChengPinCode:characteristic.value];
             });
@@ -1260,6 +1262,12 @@ NSString * const RESULT21 = @"3A1621010038000D0A";
     }
     NSString *code = result;
     
+    code = [code stringByReplacingOccurrencesOfString:@" " withString:@""];
+    if (code.length <= 12) {
+        return;
+    }
+    
+    
     
     NSString *boxCode = @"";
     if (code.length == 20) {
@@ -1269,6 +1277,9 @@ NSString * const RESULT21 = @"3A1621010038000D0A";
             boxCode = [NSString stringWithFormat:@"%@%@",s1,s2];
         }
     }
+    
+    
+    self.getBoxCode = YES;
     
     
     NSMutableDictionary *setting = [NSMutableDictionary dictionary];

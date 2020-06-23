@@ -655,6 +655,7 @@ static NSString *kToken12345= @"12345";
             NSInteger intLastSysVersion = [self getIntValueFromVersionStr:[[NSUserDefaults standardUserDefaults] objectForKey:APP_LAST_SYSTEM_VERSION]];
             [[NSUserDefaults standardUserDefaults] setObject:model.version forKey:APP_LAST_SYSTEM_VERSION];
             [[NSUserDefaults standardUserDefaults] synchronize];
+            
             if (model.compel) {
                 self.isForceUpdating = YES;
                 [self showForceUpdateAlert:model];

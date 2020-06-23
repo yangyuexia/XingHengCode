@@ -47,22 +47,31 @@
     
 }
 
+//版本
+- (NSString *)version{
+    NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+    NSString *app_Version = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
+    return app_Version;
+}
+
 - (void)checkVersion{
-    HttpClientMgr.progressEnabled=NO;
-    NSMutableDictionary *setting = [NSMutableDictionary dictionary];
-    setting[@"version"] = APP_VERSION;
-    [System SysVersionWithParams:setting success:^(id obj) {
-        NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:obj[@"version"]];
-        dic[@"code"] = obj[@"code"];
-        dic[@"message"] = obj[@"message"];
-        VersionModel *model = [VersionModel parse:dic];
-        if ([model.code integerValue] == 200) {
-            self.versionText = @"(检测到最新版本)";
-            [self.tableView reloadData];
+    
+    HttpClientMgr.progressEnabled = NO;
+    [System storeVersionWithParams:nil success:^(id obj) {
+        NSArray *array = obj[@"results"];
+        if (array.count > 0) {
+            NSString * version = obj[@"results"][0][@"version"];//线上最新版本
+            NSString *currentVersion= [self version];//当前用户版本
+            BOOL result= [currentVersion compare:version] == NSOrderedAscending;
+            if (result) {//需要更新
+                self.versionText = @"(检测到最新版本)";
+                [self.tableView reloadData];
+            }
         }
     } failure:^(HttpException *e) {
         
     }];
+    
 }
 
 #pragma mark ---- 列表代理 ----
@@ -98,28 +107,29 @@
     
     if (indexPath.row == 0) {
         //系统更新
-        HttpClientMgr.progressEnabled=NO;
-        NSMutableDictionary *setting = [NSMutableDictionary dictionary];
-        setting[@"version"] = APP_VERSION;
-        [System SysVersionWithParams:setting success:^(id obj) {
-            
-            NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithDictionary:obj[@"version"]];
-            dic[@"code"] = obj[@"code"];
-            dic[@"message"] = obj[@"message"];
-            
-            VersionModel *model = [VersionModel parse:dic];
-            if ([model.code integerValue] == 200) {
-                QWGLOBALMANAGER.installUrl = model.downLoadUrl;
-                if (model.compel) {
-                    [QWGLOBALMANAGER showForceUpdateAlert:model];
-                } else {
+        
+        HttpClientMgr.progressEnabled = NO;
+        [System storeVersionWithParams:nil success:^(id obj) {
+            NSArray *array = obj[@"results"];
+            if (array.count > 0) {
+                NSString * version = obj[@"results"][0][@"version"];//线上最新版本
+                NSString *currentVersion= [self version];//当前用户版本
+                BOOL result= [currentVersion compare:version] == NSOrderedAscending;
+                if (result) {//需要更新
+                    //调用弹框
+                    VersionModel *model = [VersionModel new];
+                    model.remark = obj[@"results"][0][@"releaseNotes"];
+                    model.downLoadUrl = @"http://itunes.apple.com/cn/lookup?id=1516850507";
+                    model.version = version;
+                    QWGLOBALMANAGER.installUrl = model.downLoadUrl;
                     [QWGLOBALMANAGER showNormalUpdateAlert:model];
+                    
                 }
             }
-            
         } failure:^(HttpException *e) {
             
         }];
+        
         
     }else if (indexPath.row == 1) {
         //客服电话
